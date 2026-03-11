@@ -94,7 +94,7 @@ const ResumeProfileSchema = z.object({
 /**
  * Input schema for the customizeResumeForJob flow.
  */
-export const CustomizeResumeForJobInputSchema = z.object({
+const CustomizeResumeForJobInputSchema = z.object({
   masterResume: ResumeProfileSchema.describe("The user's master resume profile data."),
   jobDescription: z.string().describe("The full text of the job description to tailor the resume for."),
 });
@@ -107,7 +107,7 @@ export type CustomizeResumeForJobInput = z.infer<typeof CustomizeResumeForJobInp
 /**
  * Output schema for the customizeResumeForJob flow.
  */
-export const CustomizeResumeForJobOutputSchema = z.object({
+const CustomizeResumeForJobOutputSchema = z.object({
   customizedResume: z.string().describe("The ATS-optimized, professional, and human-sounding resume tailored to the job description."),
 });
 
