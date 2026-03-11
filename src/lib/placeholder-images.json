@@ -1,3 +1,10 @@
 {
-  "placeholderImages": []
+  "placeholderImages": [
+    {
+      "id": "hero",
+      "description": "Abstract image representing AI and career progression",
+      "imageUrl": "https://picsum.photos/seed/jobpilot-hero/1200/600",
+      "imageHint": "abstract career"
+    }
+  ]
 }
