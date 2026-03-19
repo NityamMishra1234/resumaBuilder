@@ -52,6 +52,7 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
       const res = await api.get<GetProfileResponse>("/profile/master");
       setProfile(res.data.data);
     } catch (error) {
+      setProfile(null);
       console.error("Failed to fetch master profile:", error);
     } finally {
       setIsLoadingProfile(false);

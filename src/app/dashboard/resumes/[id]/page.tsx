@@ -36,7 +36,7 @@ export default function ResumePreviewPage() {
     fetchResume();
   }, [id]);
 
-  // ✅ LOADING
+  //  LOADING
   if (loading) {
     return (
       <div className="flex justify-center mt-20">
@@ -47,7 +47,7 @@ export default function ResumePreviewPage() {
 
   if (!resume) return notFound();
 
-  // ✅ DOWNLOAD (REAL PDF)
+  //  DOWNLOAD (REAL PDF)
   const handleDownload = () => {
     window.open(resume.resumeUrl, '_blank');
   };

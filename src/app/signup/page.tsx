@@ -52,6 +52,15 @@ export default function SignupPage() {
     });
   };
 
+  const redirectAfterAuth = async () => {
+    try {
+      await api.get("/profile/master");
+      router.replace('/dashboard/jobs');
+    } catch {
+      router.replace('/dashboard/profile');
+    }
+  };
+
   const sendOtp = async () => {
     setOtpLoading(true);
 
@@ -111,7 +120,7 @@ export default function SignupPage() {
           token.accessToken,
           token.refreshToken
         )
-        router.replace('/dashboard/jobs')
+        await redirectAfterAuth()
       })
 
       .catch((err) => {

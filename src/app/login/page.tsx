@@ -13,11 +13,10 @@ import { Label } from '@/components/ui/label'
 import { cn } from '@/lib/utils'
 import api from '@/api/api'
 import { useAuth } from '@/providers/AuthProvider'
-import { useFlag } from '@/contexts/flag-context'
 import { useApp } from '@/contexts/app-provider'
 
 export default function LoginPage() {
-  const {login } =useAuth()
+  const { login, user, isLoading } = useAuth()
  const {showFlag} = useApp()
   const router = useRouter()
   const [email, setEmail] = useState('')
@@ -26,11 +25,19 @@ export default function LoginPage() {
   const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
-    // If user already "logged in" (fake token), send to jobs
-    if (typeof window !== 'undefined' && localStorage.getItem('auth_token')) {
+    if (!isLoading && user) {
       router.replace('/dashboard/jobs')
     }
-  }, [router])
+  }, [isLoading, router, user])
+
+  const redirectAfterAuth = async () => {
+    try {
+      await api.get("/profile/master");
+      router.replace('/dashboard/jobs');
+    } catch {
+      router.replace('/dashboard/profile');
+    }
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -64,7 +71,7 @@ export default function LoginPage() {
           token.accessToken,
           token.refreshToken
         )
-        router.replace('/dashboard/jobs')
+        await redirectAfterAuth()
         showFlag("Login sucess" , "success")
       })
       .catch((err)=> showFlag(err.response?.data?.message || "Something went wrong", "error")
