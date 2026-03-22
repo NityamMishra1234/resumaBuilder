@@ -24,9 +24,9 @@ import { cn } from '@/lib/utils'
 
 const navItems = [
   { href: '/dashboard/jobs', icon: Briefcase, label: 'Jobs' },
-  {href : '/dashboard/resuma' , icon : DockIcon , label : "resuma"},
+  { href: '/dashboard/resuma', icon: DockIcon, label: "resuma" },
   { href: '/dashboard/applications', icon: ClipboardList, label: 'Applications' },
-  { href: '/dashboard/interviews', icon: Bot, label: 'AI Interviews' },
+  { href: '/dashboard/practice', icon: Bot, label: 'AI Interviews' },
   { href: '/dashboard/profile', icon: File, label: 'Profile' },
 ]
 

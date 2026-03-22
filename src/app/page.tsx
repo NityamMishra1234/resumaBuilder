@@ -9,7 +9,7 @@ import {
 } from 'lucide-react';
 
 import { PlaceHolderImages } from '@/lib/placeholder-images';
-import { cn } from '@/lib/utils';
+
 import { Button } from '@/components/ui/button';
 import {
   Card,
