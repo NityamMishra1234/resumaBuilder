@@ -47,6 +47,8 @@ export default function InterviewPage() {
         }
     }, [jobId]);
 
+
+
     // 2. Security: The "Iron-Clad" Disqualification
     const disqualify = useCallback((reason: string) => {
         if (step !== 'exam') return;
