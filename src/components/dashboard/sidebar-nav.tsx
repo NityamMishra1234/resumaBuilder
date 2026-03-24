@@ -3,13 +3,12 @@
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import {
-  Home,
-  File,
   Settings,
   Briefcase,
   Bot,
   ClipboardList,
-  DockIcon
+  DockIcon,
+  User2,
 } from 'lucide-react'
 
 import {
@@ -27,7 +26,7 @@ const navItems = [
   { href: '/dashboard/resuma', icon: DockIcon, label: "resuma" },
   { href: '/dashboard/applications', icon: ClipboardList, label: 'Applications' },
   { href: '/dashboard/practice', icon: Bot, label: 'AI Interviews' },
-  { href: '/dashboard/profile', icon: File, label: 'Profile' },
+  { href: '/dashboard/profile', icon: User2, label: 'Profile' },
 ]
 
 export function DashboardSidebarNav() {

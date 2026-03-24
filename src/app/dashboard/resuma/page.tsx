@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { PlusCircle, FileText, Trash2, Download, Loader2 } from 'lucide-react';
+import { PlusCircle, FileText, Trash2, Download, Loader2, Check, Copy } from 'lucide-react';
 import { formatDistanceToNow } from 'date-fns';
 
 import { Button } from '@/components/ui/button';
@@ -21,8 +21,9 @@ export default function DashboardPage() {
   const [resumes, setResumes] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [generating, setGenerating] = useState(false);
+  const [copiedId, setCopiedId] = useState<string | null>(null);
 
-  // ✅ FETCH
+  //  FETCH
   const fetchResumes = async () => {
     try {
       const res = await api.get('/resume/all');
@@ -35,11 +36,26 @@ export default function DashboardPage() {
     }
   };
 
+  const handleCopy = async (id: string, url: string) => {
+    try {
+      await navigator.clipboard.writeText(url);
+
+      setCopiedId(id);
+
+      setTimeout(() => {
+        setCopiedId(null);
+      }, 2000);
+
+    } catch (err) {
+      console.error("Copy failed", err);
+    }
+  };
+
   useEffect(() => {
     fetchResumes();
   }, []);
 
-  // ✅ GENERATE (simple, from page)
+  //  GENERATE (simple, from page)
   const handleGenerate = async (data: {
     jobTitle: string;
     companyName: string;
@@ -61,7 +77,7 @@ export default function DashboardPage() {
     }
   };
 
-  // ✅ DELETE
+  //  DELETE
   const handleDelete = async (id: string) => {
     try {
       await api.delete(`/resume/${id}`);
@@ -71,7 +87,7 @@ export default function DashboardPage() {
     }
   };
 
-  // ✅ DOWNLOAD (REAL S3)
+  //  DOWNLOAD (REAL S3)
   const handleDownload = (url: string) => {
     window.open(url, '_blank');
   };
@@ -94,7 +110,7 @@ export default function DashboardPage() {
   return (
     <div className="flex flex-col min-h-[calc(100vh-5rem)]">
 
-      {/* 🔥 TOP LOADER */}
+      {/*  TOP LOADER */}
       {generating && (
         <div className="fixed top-0 left-0 w-full bg-black text-white text-center py-2 z-50 flex items-center justify-center gap-2">
           <Loader2 className="animate-spin h-4 w-4" />
@@ -144,7 +160,21 @@ export default function DashboardPage() {
                 </Button>
 
                 <div className="flex gap-2">
-                  {/* ✅ DOWNLOAD */}
+
+
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    onClick={() => handleCopy(resume.id, resume.resumeUrl)}
+                  >
+                    {copiedId === resume.id ? (
+                      <Check className="h-4 w-4 text-green-500" />
+                    ) : (
+                      <Copy className="h-4 w-4" />
+                    )}
+                  </Button>
+
+                  {/*  DOWNLOAD */}
                   <Button
                     variant="ghost"
                     size="icon"
@@ -153,7 +183,7 @@ export default function DashboardPage() {
                     <Download className="h-4 w-4" />
                   </Button>
 
-                  {/* ✅ DELETE WITH PREVIEW */}
+                  {/*  DELETE WITH PREVIEW */}
                   <AlertDialog>
                     <AlertDialogTrigger asChild>
                       <Button variant="destructive" size="icon">
@@ -171,7 +201,7 @@ export default function DashboardPage() {
                           This will permanently delete this resume.
                         </AlertDialogDescription>
 
-                        {/* 🔥 PREVIEW */}
+                        {/*  PREVIEW */}
                         <iframe
                           src={resume.resumeUrl}
                           className="w-full h-64 mt-4 border rounded"

@@ -34,7 +34,7 @@ export const JobsList = () => {
       if (filters.skills) params.skills = filters.skills;
       if (filters.location) params.location = filters.location;
 
-      const { data } = await api.get("/jobs", { params });
+      const { data } = await api.get("/jobs/explore", { params });
       setJobs(data);
     } catch (error) {
       console.error("Error fetching jobs", error);
@@ -169,7 +169,7 @@ export const JobsList = () => {
 
                 <button
                   onClick={() =>
-                    router.push(`/dashboard/interview/${job.id}`)
+                    window.open(`/dashboard/interview/${job.id}`, "_blank")
                   }
                   className="flex items-center gap-2 bg-zinc-900 text-white dark:bg-white dark:text-black px-4 py-2 rounded-lg text-sm font-medium transition hover:opacity-90"
                 >

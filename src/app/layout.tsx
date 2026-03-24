@@ -3,7 +3,7 @@ import { Toaster } from '@/components/ui/toaster';
 import { cn } from '@/lib/utils';
 import './globals.css';
 import { AuthProvider } from '@/providers/AuthProvider';
-
+import MonacoProvider from '@/providers/MonacoProvider'; // 👈 add this
 
 export const metadata = {
   title: "HIREWISE",
@@ -20,7 +20,9 @@ export default function RootLayout({
       <body className={cn('min-h-screen bg-background font-body antialiased')}>
         <AuthProvider>
           <AppProviders>
+
             {children}
+
           </AppProviders>
         </AuthProvider>
 

@@ -23,27 +23,35 @@ import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import { Button } from '@/components/ui/button';
 import { Logo } from '../logo';
 import { usePathname } from 'next/navigation';
+import { useAuth } from '@/providers/AuthProvider';
 
 export function DashboardHeader() {
+
+  const { logout } = useAuth();
+
+  const handelLogout = () => {
+    logout()
+  }
+
   const pathname = usePathname();
   const getPageTitle = () => {
     if (pathname.startsWith('/dashboard/profile')) return 'Master Profile';
     if (pathname.startsWith('/dashboard/resumes')) return 'Generated Resumes';
     return 'Dashboard';
   };
-  
+
   return (
     <header className="sticky top-0 z-30 flex h-14 items-center gap-4 border-b bg-background px-4 sm:static sm:h-auto sm:border-0 sm:bg-transparent sm:px-6">
       <Sheet>
         <SheetTrigger asChild>
-          <Button 
-          onClick={()=> {debugger}}
-          size="icon" variant="outline" className="sm:hidden">
+          <Button
+            onClick={() => { debugger }}
+            size="icon" variant="outline" className="sm:hidden">
             <PanelLeft className="h-5 w-5" />
             <span className="sr-only">Toggle Menu</span>
           </Button>
         </SheetTrigger>
-        
+
         <SheetContent side="left" className="sm:max-w-xs">
           <nav className="grid gap-6 text-lg font-medium">
             <Logo className="mb-4" />
@@ -90,10 +98,10 @@ export function DashboardHeader() {
           <DropdownMenuItem>Support</DropdownMenuItem>
           <DropdownMenuSeparator />
           <DropdownMenuItem asChild>
-            <Link href="/login">
+            <DropdownMenuItem onClick={handelLogout} className="cursor-pointer">
               <LogOut className="mr-2 h-4 w-4" />
               Logout
-            </Link>
+            </DropdownMenuItem>
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
