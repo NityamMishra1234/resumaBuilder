@@ -22,7 +22,7 @@ import { Logo } from '../logo'
 import { cn } from '@/lib/utils'
 
 const navItems = [
-  { href: '/dashboard/jobs', icon: Briefcase, label: 'Jobs' },
+  { href: '/dashboard/job-list', icon: Briefcase, label: 'Jobs' },
   { href: '/dashboard/resuma', icon: DockIcon, label: "resuma" },
   { href: '/dashboard/applications', icon: ClipboardList, label: 'Applications' },
   { href: '/dashboard/practice', icon: Bot, label: 'AI Interviews' },

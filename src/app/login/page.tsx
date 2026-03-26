@@ -17,7 +17,7 @@ import { useApp } from '@/contexts/app-provider'
 
 export default function LoginPage() {
   const { login, user, isLoading } = useAuth()
- const {showFlag} = useApp()
+  const { showFlag } = useApp()
   const router = useRouter()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -26,7 +26,7 @@ export default function LoginPage() {
 
   useEffect(() => {
     if (!isLoading && user) {
-      router.replace('/dashboard/jobs')
+      router.replace('/dashboard/job-list')
     }
   }, [isLoading, router, user])
 
@@ -59,24 +59,23 @@ export default function LoginPage() {
 
     setLoading(true)
     try {
-      // Fake auth delay - replace with real API call
-      await api.post("/auth/login" , {
-        email : email,
-        password : password,
+      await api.post("/auth/login", {
+        email: email,
+        password: password,
       })
-      .then(async (res)=> {
-        const {token , user } = res.data
-        await login(
-          user,
-          token.accessToken,
-          token.refreshToken
+        .then(async (res) => {
+          const { token, user } = res.data
+          await login(
+            user,
+            token.accessToken,
+            token.refreshToken
+          )
+          await redirectAfterAuth()
+          showFlag("Login sucess", "success")
+        })
+        .catch((err) => showFlag(err.response?.data?.message || "Something went wrong", "error")
         )
-        await redirectAfterAuth()
-        showFlag("Login sucess" , "success")
-      })
-      .catch((err)=> showFlag(err.response?.data?.message || "Something went wrong", "error")
-      )
-      
+
     } catch (err) {
       console.error(err)
       setError('Something went wrong. Try again.')
